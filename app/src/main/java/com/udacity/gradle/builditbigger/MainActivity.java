@@ -5,8 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import ch.builditbigger.displayjokes.DisplayJokeActivity;
 import ch.builditbigger.jokes.Joker;
 
 
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         Joker joker = new Joker();
-        Toast.makeText(this, joker.getJoke(), Toast.LENGTH_SHORT).show();
+        DisplayJokeActivity.startActvity(this, joker.getJoke());
     }
-
-
 }

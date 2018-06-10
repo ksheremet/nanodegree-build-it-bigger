@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ch.builditbigger.displayjokes">
+
+    <application>
+        <activity android:name=".DisplayJokeActivity"
+            android:theme="@style/AppTheme"/>
+    </application>
+
+</manifest>
