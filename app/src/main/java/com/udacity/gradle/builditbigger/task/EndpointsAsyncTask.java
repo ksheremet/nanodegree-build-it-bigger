@@ -39,7 +39,6 @@ public class EndpointsAsyncTask extends AsyncTask<JokeReceivedCallback, Void, St
         mCallback = callback[0];
 
         try {
-            // TODO: Rename method getJoke()
             return myApiService.getJoke().execute().getJoke();
         } catch (IOException e) {
             Log.e(TAG, e.getMessage());

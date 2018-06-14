@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -23,13 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     private InterstitialAd mInterstitialAd;
+    private ProgressBar mProgressBarSpinner;
+    private View mContentFragment;
 
     private JokeReceivedCallback callback = new JokeReceivedCallback() {
         @Override
         public void jokeReceived(String joke) {
             if (joke == null) {
                 Toast.makeText(MainActivity.this, MainActivity.this
-                        .getResources().getString(R.string.error_user_message),
+                                .getResources().getString(R.string.error_user_message),
                         Toast.LENGTH_SHORT).show();
             } else {
                 DisplayJokeActivity.startActvity(MainActivity.this, joke);
@@ -53,9 +56,32 @@ public class MainActivity extends AppCompatActivity {
                 super.onAdClosed();
                 // Load the next interstitial.
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
-                new EndpointsAsyncTask().execute(callback);
+                startJokeLoading();
             }
         });
+        mProgressBarSpinner = findViewById(R.id.progressBarSpinner);
+        mContentFragment = findViewById(R.id.fragment);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showContent();
+    }
+
+    private void showContent() {
+        mProgressBarSpinner.setVisibility(View.INVISIBLE);
+        mContentFragment.setVisibility(View.VISIBLE);
+    }
+
+    private void showProgressBar() {
+        mProgressBarSpinner.setVisibility(View.VISIBLE);
+        mContentFragment.setVisibility(View.INVISIBLE);
+    }
+
+    private void startJokeLoading() {
+        showProgressBar();
+        new EndpointsAsyncTask().execute(callback);
     }
 
     @Override
@@ -85,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             mInterstitialAd.show();
         } else {
             Log.w(TAG, "The interstitial ad wasn't loaded yet.");
-            new EndpointsAsyncTask().execute(callback);
+            startJokeLoading();
         }
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.udacity.gradle.builditbigger.task.EndpointsAsyncTask;
@@ -14,6 +15,9 @@ import ch.builditbigger.displayjokes.DisplayJokeActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private ProgressBar mProgressBarSpinner;
+    private View mContentFragment;
 
     private JokeReceivedCallback callback = new JokeReceivedCallback() {
         @Override
@@ -32,8 +36,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressBarSpinner = findViewById(R.id.progressBarSpinner);
+        mContentFragment = findViewById(R.id.fragment);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showContent();
+    }
+
+    private void showContent() {
+        mProgressBarSpinner.setVisibility(View.INVISIBLE);
+        mContentFragment.setVisibility(View.VISIBLE);
+    }
+
+    private void showProgressBar() {
+        mProgressBarSpinner.setVisibility(View.VISIBLE);
+        mContentFragment.setVisibility(View.INVISIBLE);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
+        showProgressBar();
         new EndpointsAsyncTask().execute(callback);
     }
 }
