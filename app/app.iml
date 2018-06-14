@@ -208,5 +208,9 @@
     <orderEntry type="module" module-name="jokes" />
     <orderEntry type="module" module-name="displayjokes" />
     <orderEntry type="module" module-name="jokes" />
+    <orderEntry type="module" module-name="displayjokes" />
+    <orderEntry type="module" module-name="jokes" />
+    <orderEntry type="module" module-name="displayjokes" />
+    <orderEntry type="module" module-name="jokes" />
   </component>
 </module>
